@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>值日表</title>
+</head>
+<style>
+    .main{
+        height: 300px;
+        width: 300px;
+        background-color: aqua;
+        text-align: center;
+        border-radius: 20px;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+</style>
+
+<body>
+    <div class="main">
+        <p id="curdate"></p>
+        <p id="work"></p>
+    </div>
+</body>
+
+</html>
+<script>
+    let peoples = ['张三', '李四', '王五', '赵六', '钱七']
+
+    // 页面初始时获取当前是本年第几周
+    function getYearWeek(a, b, c) {
+        //a为年 b为月 c为日
+        /*  
+            date1是当前日期  
+            date2是当年第一天  
+            d是当前日期是今年第多少天  
+            用d + 当前年的第一天的周差距的和在除以7就是本年第几周  
+        */
+        var date1 = new Date(a, parseInt(b) - 1, c),
+            date2 = new Date(a, 0, 1),
+            d = Math.round((date1.valueOf() - date2.valueOf()) / 86400000);
+        return Math.ceil((d + (date2.getDay() + 1 - 1)) / 7);
+    }
+
+    // 页面初始需要的周和月的数据
+    const date = new Date();
+    // 获取当前第几周
+    let week = getYearWeek(date.getFullYear(), Number(date.getMonth()) + 1, date.getDate());
+    let curdate = document.getElementById('curdate');
+    curdate.innerHTML = '今天是' + date.getFullYear() + '年' + (Number(date.getMonth()) + 1)
+        + '月' + date.getDate() + '日'
+    let work = document.getElementById('work');
+    let index = Number(week) % peoples.length
+    if (index == 0) {
+        index=peoples.length-1
+    }else{
+        index--;
+    }
+    work.innerHTML='今天是：'+peoples[index]+" 值日"
+</script>
