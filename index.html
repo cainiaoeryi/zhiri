@@ -7,20 +7,45 @@
     <title>值日表</title>
 </head>
 <style>
-    .main{
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .main {
         height: 300px;
         width: 300px;
-        background-color: aqua;
+        background-color: rgba(255, 255, 255, 0.9);
         text-align: center;
         border-radius: 20px;
-        margin: auto;
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        transition: transform 0.3s ease;
+    }
+
+    .main:hover {
+        transform: scale(1.05);
+    }
+
+    #curdate {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    #work {
+        font-size: 24px;
+        font-weight: bold;
+        color: #007BFF;
     }
 </style>
+
 
 <body>
     <div class="main">
