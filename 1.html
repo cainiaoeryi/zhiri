@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帅哥申请</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+       .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+       .text {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+       .emoji {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+       .eyes {
+            position: absolute;
+            top: 40px;
+            display: flex;
+            gap: 30px;
+        }
+       .eye {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: #333;
+            position: relative;
+        }
+       .pupil {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #fff;
+            position: absolute;
+            top: 8px;
+            left: 8px;
+        }
+       .mouth {
+            width: 80px;
+            height: 40px;
+            border-radius: 0 0 40px 40px;
+            background-color: #ff6b6b;
+            position: absolute;
+            bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            margin: 0 15px;
+            position: relative;
+            z-index: 10;
+        }
+       .accept {
+            background-color: #4caf50;
+            color: white;
+        }
+       .reject {
+            background-color: #f44336;
+            color: white;
+            position: absolute;
+        }
+       .thank-you {
+            display: none;
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="text" id="text">
+            <p>您的员工夏浩带着满满的反省与诚恳向你发送了一封申请，您的亲爱的夏浩已经认识到错误的所在，看您在四号的时候您的情绪不像往常那般轻松，眉宇间带着一丝不易察觉的紧绷，说话时的语气也少了几分平日的温和。</p>
+            <p>所以向您发了一封申请，希望您开心，一直微笑面对夏浩同学，永不急躁，心平气和。亲爱敬爱的艳姐是否接受？</p>
+        </div>
+        <div class="emoji" id="emoji">
+            <div class="eyes">
+                <div class="eye"><div class="pupil"></div></div>
+                <div class="eye"><div class="pupil"></div></div>
+            </div>
+            <div class="mouth" id="mouth"></div>
+        </div>
+        <div class="buttons" id="buttons">
+            <button class="accept" id="acceptBtn">接受</button>
+            <button class="reject" id="rejectBtn">拒绝</button>
+        </div>
+        <div class="thank-you" id="thankYou">
+            <p>谢谢，艳姐</p>
+            <p>祝艳姐金山银山身上堆，人人称你是贵妃。
+                越长越迷人，个个都叫你女神。
+                心情天天都美丽，出门座驾是宾利。
+                地位安如泰山稳，房产一本接一本。
+                身上不长五花肉，大吃大喝自然瘦</p>
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById('container');
+        const emoji = document.getElementById('emoji');
+        const mouth = document.getElementById('mouth');
+        const rejectBtn = document.getElementById('rejectBtn');
+        const acceptBtn = document.getElementById('acceptBtn');
+        const thankYou = document.getElementById('thankYou');
+        const text = document.getElementById('text');
+        const buttons = document.getElementById('buttons');
+
+        // 表情变化
+        function changeEmoji(isScared) {
+            if (isScared) {
+                emoji.style.backgroundColor = '#81c784'; // 绿色
+                mouth.style.height = '20px'; // 嘴变小
+                mouth.style.backgroundColor = '#e57373'; // 嘴变红
+            } else {
+                emoji.style.backgroundColor = '#ffcc80'; // 黄色
+                mouth.style.height = '40px'; // 嘴变大
+                mouth.style.backgroundColor = '#ff6b6b'; // 嘴变红
+            }
+        }
+
+        // 随机移动拒绝按钮
+        function moveRejectBtn() {
+            const maxX = window.innerWidth - rejectBtn.offsetWidth - 40;
+            const maxY = window.innerHeight - rejectBtn.offsetHeight - 40;
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+            rejectBtn.style.left = x + 'px';
+            rejectBtn.style.top = y + 'px';
+        }
+
+        rejectBtn.addEventListener('mouseenter', () => {
+            changeEmoji(true);
+            moveRejectBtn();
+        });
+
+        rejectBtn.addEventListener('click', moveRejectBtn);
+
+        acceptBtn.addEventListener('click', () => {
+            changeEmoji(false);
+            text.style.display = 'none';
+            buttons.style.display = 'none';
+            thankYou.style.display = 'block';
+            emoji.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                emoji.style.transform = 'scale(1)';
+            }, 500);
+        });
+
+        // 初始表情
+        changeEmoji(false);
+    </script>
+</body>
+</html>
