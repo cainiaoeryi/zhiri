@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0">
+    <title>草本膏药 官方特惠专场</title>
+    <style>
+        *{box-sizing: border-box;margin:0;padding:0;font-family: "Microsoft Yahei",sans-serif;}
+        body{background:#f5f5f5;font-size:22px;line-height:1.7;color:#333;max-width:640px;margin:0 auto;padding-bottom:120px;}
+        .hide{display:none;}
+
+        /* 顶部滚动公告 */
+        .notice-bar{background:#7a0000;color:#ffd;text-align:center;padding:8px;font-size:18px;font-weight:bold;}
+        .notice-bar span{animation:blink 1s infinite;}
+        @keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+        /* 倒计时样式 */
+        .countdown-wrap{background:#c8102e;color:#fff;text-align:center;padding:12px;font-size:22px;font-weight:bold;}
+        .count-num{background:#000;padding:2px 8px;border-radius:4px;margin:0 3px;}
+
+        /* 商品首页样式 */
+        .goods-page{padding:16px;background:#fff;}
+        /* 轮播图 */
+        .swiper{position:relative;width:100%;height:340px;overflow:hidden;border-radius:8px;}
+        .swiper-track{display:flex;height:100%;transition:transform .4s ease;}
+        .slide{flex:0 0 100%;height:100%;}
+        .slide img{width:100%;height:100%;object-fit:cover;display:block;}
+        .swiper-dots{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:8px;z-index:5;}
+        .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.6);cursor:pointer;border:none;padding:0;}
+        .dot.active{background:#c8102e;}
+
+        /* 假资质 */
+        .badge-row{display:flex;justify-content:space-around;gap:6px;margin:14px 0;flex-wrap:wrap;}
+        .badge{background:#fff6e5;border:1px solid #e6b800;color:#a56600;padding:5px 10px;border-radius:20px;font-size:17px;font-weight:bold;}
+
+        .goods-title{font-size:28px;font-weight:bold;margin:16px 0;line-height:1.4;color:#000;}
+
+        /* 已售数据 */
+        .sold-row{display:flex;align-items:center;gap:10px;margin:8px 0;color:#c8102e;font-weight:bold;font-size:20px;}
+        .sold-bar{flex:1;height:12px;background:#eee;border-radius:6px;overflow:hidden;}
+        .sold-bar i{display:block;height:100%;width:78%;background:linear-gradient(90deg,#ff7a00,#ff3b3b);}
+
+        .price-row{display:flex;gap:12px;align-items:baseline;margin:12px 0;}
+        .price-now{font-size:42px;color:#c8102e;font-weight:bold;}
+        .price-now small{font-size:24px;}
+        .price-old{font-size:20px;color:#999;text-decoration:line-through;}
+        .price-tag{background:#c8102e;color:#fff;font-size:16px;padding:2px 8px;border-radius:4px;margin-left:4px;}
+
+        .tip-limited{background:#fff2e8;color:#d2691e;padding:10px 14px;border-radius:6px;margin:14px 0;font-size:21px;font-weight:bold;}
+
+        /* 优惠券 */
+        .coupon{background:linear-gradient(90deg,#ffefe6,#ffe0d0);border:1px dashed #ff7a00;border-radius:10px;padding:12px 16px;margin:14px 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;}
+        .coupon .amt{color:#e02020;font-size:30px;font-weight:bold;}
+        .coupon .txt{font-size:18px;color:#a56600;}
+
+        .desc{margin:18px 0;}
+        .desc p{margin:12px 0;font-size:22px;}
+
+        /* 权威背书 */
+        .endorse{background:linear-gradient(180deg,#fff,#f7fbff);border:1px solid #d0e5ff;border-radius:10px;padding:16px;margin:16px 0;}
+        .endorse h4{color:#2378d5;font-size:22px;margin-bottom:10px;text-align:center;}
+        .expert{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px dashed #cfe0f5;}
+        .expert:last-child{border-bottom:none;}
+        .expert img{width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;background:#eee;}
+        .expert .info{flex:1;}
+        .expert .name{font-weight:bold;font-size:21px;color:#000;}
+        .expert .title{color:#2378d5;font-size:18px;font-weight:bold;}
+        .expert .say{font-size:20px;color:#333;margin-top:4px;}
+        .org-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;justify-content:center;}
+        .org{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:6px 12px;font-size:18px;color:#555;font-weight:bold;}
+
+        .comment-block{background:#fafafa;padding:14px;border-radius:8px;margin:18px 0;}
+        .comment-block h4{font-size:22px;color:#c8102e;margin-bottom:6px;}
+        .comment-item{border-bottom:1px solid #eee;padding:12px 0;font-size:21px;}
+        .comment-item b{color:#c8102e;}
+        .comment-item .star{color:#ff9d00;}
+
+        /* 底部固定按钮 */
+        .buy-fixed{position:fixed;left:0;bottom:0;width:100%;max-width:640px;background:#fff;padding:12px 14px;border-top:1px solid #ddd;display:flex;gap:10px;align-items:center;z-index:50;}
+        .buy-fixed .mini{font-size:16px;color:#999;flex:1;line-height:1.3;}
+        .buy-btn{width:60%;background:linear-gradient(180deg,#ff5a5a,#e02020);color:#fff;border:none;font-size:24px;padding:16px;border-radius:50px;cursor:pointer;font-weight:bold;box-shadow:0 4px 10px rgba(224,32,32,.4);}
+        .footer-small{margin-top:20px;font-size:14px;color:#777;padding:10px;text-align:center;}
+
+        /* 下单表单页 */
+        .order-page{padding:16px;background:#fff;}
+        .form-item{margin:18px 0;}
+        .form-item label{display:block;margin-bottom:8px;font-weight:bold;font-size:22px;}
+        .form-item input{width:100%;padding:16px;font-size:21px;border:1px solid #ccc;border-radius:8px;}
+        .spec-select{width:100%;padding:16px;font-size:21px;border:1px solid #ccc;border-radius:8px;background:#fff;}
+        .submit-order-btn{width:100%;background:linear-gradient(180deg,#ff5a5a,#e02020);color:#fff;border:none;font-size:24px;padding:16px;border-radius:50px;margin-top:20px;cursor:pointer;font-weight:bold;}
+
+        /* 实时成交弹幕 */
+        .toast-box{position:fixed;top:120px;left:10px;z-index:60;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.2);border-radius:8px;padding:8px 12px;font-size:17px;display:flex;align-items:center;gap:8px;max-width:300px;opacity:0;transform:translateY(-10px);transition:all .5s;}
+        .toast-box.show{opacity:1;transform:translateY(0);}
+        .toast-box img{width:36px;height:36px;border-radius:50%;object-fit:cover;background:#eee;flex-shrink:0;}
+        .toast-box .t{color:#333;}
+        .toast-box .t b{color:#c8102e;}
+
+        /* 假客服 */
+        .kf-btn{position:fixed;right:14px;bottom:120px;z-index:60;background:#2378d5;color:#fff;border:none;border-radius:50px;padding:12px 16px;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(35,120,213,.4);display:flex;align-items:center;gap:6px;}
+        .kf-panel{position:fixed;right:14px;bottom:190px;z-index:70;width:300px;max-width:80vw;background:#fff;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.25);overflow:hidden;display:none;}
+        .kf-head{background:#2378d5;color:#fff;padding:12px;display:flex;align-items:center;gap:10px;font-size:19px;font-weight:bold;}
+        .kf-head img{width:40px;height:40px;border-radius:50%;background:#fff;object-fit:cover;}
+        .kf-head .info{flex:1;line-height:1.3;}
+        .kf-close{background:rgba(255,255,255,.25);color:#fff;border:none;width:32px;height:32px;border-radius:50%;font-size:20px;line-height:1;cursor:pointer;flex-shrink:0;}
+        .kf-body{padding:12px;background:#f2f2f2;max-height:260px;overflow-y:auto;}
+        .kf-msg{background:#fff;padding:10px 12px;border-radius:8px;margin:8px 0;font-size:18px;display:inline-block;max-width:90%;}
+        .kf-msg.me{background:#cfe6ff;float:right;}
+        .kf-msg.doc{background:#fff;float:left;}
+        .kf-input{display:flex;border-top:1px solid #ddd;}
+        .kf-input input{flex:1;border:none;padding:12px;font-size:18px;outline:none;}
+        .kf-input button{background:#2378d5;color:#fff;border:none;padding:0 16px;font-size:18px;cursor:pointer;}
+
+        /* 反诈弹窗 */
+        .mask{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.75);display:none;align-items:center;justify-content:center;padding:20px;z-index:999;}
+        .popup{background:#fff;padding:26px;border-radius:14px;max-width:540px;max-height:85vh;overflow-y:auto;}
+        .popup h3{color:#c8102e;font-size:28px;margin-bottom:16px;text-align:center;}
+        .popup p{margin:12px 0;font-size:21px;}
+        .review-box{background:#fff6f6;border:1px solid #ffd0d0;border-radius:10px;padding:14px;margin:14px 0;}
+        .review-box h4{color:#c8102e;font-size:22px;margin-bottom:8px;}
+        .review-box li{margin:8px 0;font-size:20px;list-style:none;}
+        .review-box li b{color:#c8102e;}
+        .ok-btn{width:100%;margin-top:20px;background:#2378d5;color:#fff;border:none;padding:16px;font-size:22px;border-radius:10px;cursor:pointer;font-weight:bold;}
+
+        /* 入场大额优惠券 */
+        .coupon-pop{text-align:center;}
+        .coupon-pop h3{color:#c8102e;font-size:28px;}
+        .big-coupon{font-size:72px;color:#e02020;font-weight:bold;margin:10px 0;line-height:1;}
+        .big-coupon small{font-size:36px;}
+        .coupon-pop .sub{font-size:21px;color:#333;}
+        .price-flash{animation:priceFlash .6s;}
+        @keyframes priceFlash{0%{transform:scale(1.7);color:#ff0000;}100%{transform:scale(1);}}
+    </style>
+</head>
+<body>
+    <!-- 顶部滚动公告 -->
+    <div class="notice-bar"><span>⚠️ 官方公告：今日限时补贴，仅剩最后一批，错过再等一年！</span></div>
+
+    <!-- 顶部倒计时 -->
+    <div class="countdown-wrap">
+        🔥活动倒计时：
+        <span class="count-num" id="h">00</span>时
+        <span class="count-num" id="m">29</span>分
+        <span class="count-num" id="s">58</span>秒
+    </div>
+
+    <!-- 页面1：商品详情页 -->
+    <div class="goods-page" id="pageGoods">
+        <!-- 轮播图：把下面3张图片的 src 换成你要放的照片即可 -->
+        <div class="swiper" id="swiper">
+            <div class="swiper-track" id="swiperTrack">
+                <div class="slide"><img src="lunbo1.jpg" alt="图1"></div>
+                <div class="slide"><img src="lunbo2.jpg" alt="图2"></div>
+                <div class="slide"><img src="lunbo3.jpg" alt="图3"></div>
+            </div>
+            <div class="swiper-dots" id="swiperDots"></div>
+        </div>
+
+        <div class="badge-row">
+            <span class="badge">✅ 药监备案</span>
+            <span class="badge">✅ 央视推荐</span>
+            <span class="badge">✅ 专家认证</span>
+            <span class="badge">✅ 老字号</span>
+        </div>
+
+        <h2 class="goods-title">百年草本膏药 颈肩腰腿专用 今日限时特惠</h2>
+
+        <div class="sold-row">
+            <span>已售 3627 盒</span>
+            <span class="sold-bar"><i></i></span>
+            <span>今日已抢 98 盒</span>
+        </div>
+
+        <div class="price-row">
+            <span class="price-now" id="priceNow"><small>¥</small>498</span>
+            <span class="price-tag">限时秒杀</span>
+            <span class="price-old">原价698元</span>
+        </div>
+
+        <div class="tip-limited">🔥仅剩 <span id="stock">18</span> 份库存，活动今天截止！</div>
+
+        <!-- 优惠券 -->
+        <div class="coupon" id="coupon">
+            <div>
+                <div class="amt">¥200</div>
+                <div class="txt">限时优惠券 点击立即领取</div>
+            </div>
+            <div style="font-size:30px;">⬇️</div>
+        </div>
+
+        <div class="desc">
+            <p>很多老人腰腿不适，这款膏药经过多年验证，贴上去温热舒服。</p>
+            <p>很多叔叔阿姨用了都说好，厂家直供没有中间商。</p>
+            <p>现在下单，包邮送到家！</p>
+        </div>
+
+        <!-- 权威背书 -->
+        <div class="endorse">
+            <h4>🏥 权威专家 · 三甲医院联合推荐</h4>
+            <div class="expert">
+                <img src="ys1.png" alt="专家">
+                <div class="info">
+                    <div class="name">王建国 教授</div>
+                    <div class="title">北京协和医院 骨科主任医师</div>
+                    <div class="say">“这款膏药配方科学，我临床推荐给很多患者，反馈都非常好。”</div>
+                </div>
+            </div>
+            <div class="expert">
+                <img src="ys2.png" alt="专家">
+                <div class="info">
+                    <div class="name">李秀兰 主任</div>
+                    <div class="title">上海瑞金医院 康复医学科</div>
+                    <div class="say">“老年人颈肩腰腿痛很常见，坚持贴用，明显缓解。”</div>
+                </div>
+            </div>
+            <div class="org-row">
+                <span class="org">🏛 央视《健康之路》报道</span>
+                <span class="org">🏥 北京协和医院联合推荐</span>
+                <span class="org">🔬 国家中医药学会认证</span>
+                <span class="org">✅ 315 诚信品牌</span>
+            </div>
+        </div>
+
+        <div class="comment-block">
+            <h4>📢 真实用户好评（已认证）</h4>
+            <div class="comment-item"><span class="star">★★★★★</span> 王阿姨：<b>贴了几天，轻松很多，已经回购了</b></div>
+            <div class="comment-item"><span class="star">★★★★★</span> 张大爷：物流很快，包装完好，推荐购买</div>
+            <div class="comment-item"><span class="star">★★★★★</span> 李叔叔：抢到了，给老伴也买一盒</div>
+            <div class="comment-item"><span class="star">★★★★★</span> 刘阿姨：活动快结束了，还好赶上了</div>
+        </div>
+
+        <!-- 底部小字免责 -->
+        <div class="footer-small">本页面为反诈警示教育模拟演示，商品虚构，不售卖任何产品，仅用于学习识别网络诈骗，不会收集保存您填写的个人信息</div>
+    </div>
+
+    <!-- 底部固定抢购按钮 -->
+    <div class="buy-fixed" id="buyBar">
+        <div class="mini">到手价<strong style="color:#c8102e;" id="payPrice">¥6980</strong><br>仅剩<span id="stock2">18</span>份</div>
+        <button class="buy-btn" id="goOrderBtn">立即抢购</button>
+    </div>
+
+    <!-- 实时成交弹幕 -->
+    <div class="toast-box" id="toast">
+        <img src="yh1.png" alt="用户">
+        <div class="t"><b id="toastName">王阿姨</b> <span id="toastAct">刚刚下单了 3盒</span></div>
+    </div>
+
+    <!-- 假客服 -->
+    <button class="kf-btn" id="kfBtn">💬 在线咨询</button>
+    <div class="kf-panel" id="kfPanel">
+        <div class="kf-head">
+            <img src="ys1.png" alt="医生">
+            <div class="info">王主任 · 在线医生<br><small style="font-size:14px;">已服务 3 万名患者</small></div>
+            <button class="kf-close" id="kfClose" title="收起">—</button>
+        </div>
+        <div class="kf-body" id="kfBody">
+            <div class="kf-msg doc">您好，我是王主任，您哪里不舒服？</div>
+            <div class="kf-msg doc">这款膏药是我院推荐，很多老人都说效果好。</div>
+        </div>
+        <div class="kf-input">
+            <input type="text" id="kfText" placeholder="输入想咨询的问题...">
+            <button id="kfSend">发送</button>
+        </div>
+    </div>
+
+    <!-- 页面2：填写订单表单 -->
+    <div class="order-page hide" id="pageOrder">
+        <h2 style="font-size:26px;text-align:center;margin-bottom:24px;">填写收货信息，提交订单</h2>
+        <div class="form-item">
+            <label>选择规格</label>
+            <select class="spec-select" id="spec">
+                <option>1盒体验装 99元</option>
+                <option>3盒特惠装 249元</option>
+            </select>
+        </div>
+        <div class="form-item">
+            <label>收货人姓名</label>
+            <input type="text" id="name" placeholder="请填写您的真实姓名">
+        </div>
+        <div class="form-item">
+            <label>手机号码</label>
+            <input type="tel" id="phone" placeholder="填写手机号接收快递通知">
+        </div>
+        <div class="form-item">
+            <label>收货详细地址</label>
+            <input type="text" id="addr" placeholder="省 市 街道 小区">
+        </div>
+        <button class="submit-order-btn" id="submitBtn">提交订单</button>
+        <div class="footer-small">本页面为反诈警示教育模拟演示，商品虚构，不售卖任何产品，仅用于学习识别网络诈骗，不会收集保存您填写的个人信息</div>
+    </div>
+
+    <!-- 入场大额优惠券弹窗 -->
+    <div class="mask" id="couponMask">
+        <div class="popup coupon-pop">
+            <h3>🎉 恭喜！您是今日第 8 位幸运用户</h3>
+            <div class="big-coupon">¥<span>399</span></div>
+            <p class="sub">已为您锁定大额优惠券</p>
+            <p class="sub">原价 <del>698元</del> → 券后仅需 <b style="color:#e02020;">99元</b></p>
+            <button class="ok-btn" id="couponGetBtn">立即领取</button>
+        </div>
+    </div>
+
+    <!-- 反诈揭示弹窗（提交订单才弹出） -->
+    <div class="mask" id="mask">
+        <div class="popup">
+            <h3>⚠️ 反诈警示教育提示</h3>
+            <p>恭喜完成本次诈骗模拟演练！</p>
+            <p>您刚才填写信息、提交订单的操作，就是骗子常用的第一步。</p>
+
+            <div class="review-box">
+                <h4>🔍 刚才您中了这些套路：</h4>
+                <li><b>① 倒计时逼单</b>：用"最后29分钟"逼你来不及思考就下单。</li>
+                <li><b>② 虚假库存</b>：数字一直在减少，制造"快没了"的紧迫感。</li>
+                <li><b>③ 假评论假销量</b>：好评和销量都是假的，营造大家都在买的假象。</li>
+                <li><b>④ 假资质假背书</b>："央视推荐""专家认证"全是伪造的。</li>
+                <li><b>⑤ 低价诱饵</b>：99元+200元券，先把你勾进来。</li>
+                <li><b>⑥ 假医生客服</b>：所谓的"王主任"根本不是医生。</li>
+            </div>
+
+            <p>✅ 真相：这个商品根本不存在，这是专门给老年人做的防骗学习页面。</p>
+            <p>骗子套路：先用低价、神效产品吸引下单，收集你的姓名、手机号、地址；下一步会打电话，哄你继续交钱、购买更多产品，或者套取银行卡、验证码。</p>
+            <p>📞 遇到类似广告拿不准，拨打反诈专线 <strong>96110</strong>，或拨打110。</p>
+            <p>💡记住三点：</p>
+            <p>1. 保健品、膏药不能包治百病；</p>
+            <p>2. 陌生网页不要随便填写个人信息；</p>
+            <p>3. 凡是网上推销“特效药”，一律多和子女商量。</p>
+            <button class="ok-btn" id="okBtn">我明白了，学习结束</button>
+        </div>
+    </div>
+
+<script>
+    const pageGoods = document.getElementById('pageGoods');
+    const buyBar = document.getElementById('buyBar');
+    const pageOrder = document.getElementById('pageOrder');
+    const goOrderBtn = document.getElementById('goOrderBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const mask = document.getElementById('mask');
+    const okBtn = document.getElementById('okBtn');
+
+    // ========== 倒计时逻辑 ==========
+    let totalSecond = 29 * 60 + 58;
+    const hDom = document.getElementById('h');
+    const mDom = document.getElementById('m');
+    const sDom = document.getElementById('s');
+    function updateCountDown(){
+        if(totalSecond <= 0){
+            totalSecond = 29 * 60 + 58;
+        }
+        let h = Math.floor(totalSecond / 3600);
+        let m = Math.floor((totalSecond % 3600)/60);
+        let s = totalSecond % 60;
+        hDom.innerText = String(h).padStart(2,'0');
+        mDom.innerText = String(m).padStart(2,'0');
+        sDom.innerText = String(s).padStart(2,'0');
+        totalSecond--;
+    }
+    setInterval(updateCountDown,1000);
+    updateCountDown();
+
+    // ========== 入场大额优惠券 + 价格骤降 ==========
+    const couponMask = document.getElementById('couponMask');
+    const priceNow = document.getElementById('priceNow');
+    const payPrice = document.getElementById('payPrice');
+    // 进来先看到大金额，0.8 秒后突然弹出大额优惠券
+    setTimeout(function(){
+        couponMask.style.display = 'flex';
+    }, 800);
+    // 数字从大到小滚动动画（el 目标元素，useSmall 是否带小号¥）
+    function animatePrice(el, from, to, duration, useSmall){
+        const start = performance.now();
+        function step(now){
+            let p = (now - start) / duration;
+            if(p >= 1){ p = 1; }
+            const val = Math.round(from + (to - from) * p);
+            el.innerHTML = (useSmall ? '<small>¥</small>' : '¥') + val;
+            if(p < 1){
+                requestAnimationFrame(step);
+            } else {
+                el.classList.add('price-flash');
+                setTimeout(function(){ el.classList.remove('price-flash'); }, 600);
+            }
+        }
+        requestAnimationFrame(step);
+    }
+    document.getElementById('couponGetBtn').onclick = function(){
+        couponMask.style.display = 'none';
+        animatePrice(priceNow, 498, 99, 900, true);    // 主价格 498 → 99
+        animatePrice(payPrice, 6980, 99, 1200, false); // 交易金额 6980 → 99
+    };
+
+    // ========== 轮播图 ==========
+    const swiperTrack = document.getElementById('swiperTrack');
+    const swiperDots = document.getElementById('swiperDots');
+    const slides = swiperTrack.querySelectorAll('.slide');
+    let curSlide = 0;
+    // 根据图片数量生成指示点
+    slides.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.onclick = function(){ goSlide(i); };
+        swiperDots.appendChild(dot);
+    });
+    const dots = swiperDots.querySelectorAll('.dot');
+    function goSlide(i){
+        curSlide = i;
+        swiperTrack.style.transform = 'translateX(-' + (i * 100) + '%)';
+        dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+    }
+    function nextSlide(){
+        curSlide = (curSlide + 1) % slides.length;
+        goSlide(curSlide);
+    }
+    setInterval(nextSlide, 3000);
+
+    // ========== 库存自动减少 ==========
+    let stockNum = 18;
+    const stockDom = document.getElementById('stock');
+    const stockDom2 = document.getElementById('stock2');
+    function reduceStock(){
+        if(stockNum <= 3){
+            stockNum = 18;
+        }else{
+            stockNum--;
+        }
+        stockDom.innerText = stockNum;
+        stockDom2.innerText = stockNum;
+    }
+    setInterval(reduceStock,4000);
+
+    // ========== 实时成交弹幕 ==========
+    const toast = document.getElementById('toast');
+    const toastName = document.getElementById('toastName');
+    const toastAct = document.getElementById('toastAct');
+    const names = ['王阿姨','张大爷','李叔叔','刘阿姨','赵奶奶','孙大爷','周阿姨','吴叔叔'];
+    const acts = ['刚刚下单了 3盒','正在咨询中','刚刚领取了200元券','刚刚下单了 1盒','已成功付款','刚刚下单了 5盒'];
+    function showToast(){
+        toastName.innerText = names[Math.floor(Math.random()*names.length)];
+        toastAct.innerText = acts[Math.floor(Math.random()*acts.length)];
+        toast.classList.add('show');
+        setTimeout(()=>{ toast.classList.remove('show'); }, 3000);
+    }
+    // 每5秒随机弹一条
+    setInterval(showToast, 5000);
+    setTimeout(showToast, 1500);
+
+    // ========== 优惠券点击 ==========
+    document.getElementById('coupon').onclick = function(){
+        alert("🎉 恭喜！200元优惠券已到账，下单立减！");
+    };
+
+    // ========== 假客服 ==========
+    const kfBtn = document.getElementById('kfBtn');
+    const kfPanel = document.getElementById('kfPanel');
+    const kfBody = document.getElementById('kfBody');
+    const kfText = document.getElementById('kfText');
+    const kfSend = document.getElementById('kfSend');
+    kfBtn.onclick = function(){
+        kfPanel.style.display = (kfPanel.style.display === 'block') ? 'none' : 'block';
+    };
+    document.getElementById('kfClose').onclick = function(){
+        kfPanel.style.display = 'none';
+    };
+    const docReply = [
+        '这款膏药纯草本，安全无副作用，放心用。',
+        '现在下单最划算，我帮您申请了一个专属名额。',
+        '很多老人都治好了，您抓紧时间别错过。',
+        '留下联系方式，稍后我安排专人给您回电。'
+    ];
+    function sendKf(){
+        const t = kfText.value.trim();
+        if(!t) return;
+        const me = document.createElement('div');
+        me.className = 'kf-msg me';
+        me.innerText = t;
+        kfBody.appendChild(me);
+        kfText.value = '';
+        // 假医生回复
+        setTimeout(()=>{
+            const doc = document.createElement('div');
+            doc.className = 'kf-msg doc';
+            doc.innerText = docReply[Math.floor(Math.random()*docReply.length)];
+            kfBody.appendChild(doc);
+            kfBody.scrollTop = kfBody.scrollHeight;
+        }, 600);
+        kfBody.scrollTop = kfBody.scrollHeight;
+    }
+    kfSend.onclick = sendKf;
+    kfText.addEventListener('keydown', function(e){ if(e.key === 'Enter') sendKf(); });
+
+    // 去下单表单页
+    goOrderBtn.onclick = function(){
+        pageGoods.classList.add('hide');
+        buyBar.classList.add('hide');
+        pageOrder.classList.remove('hide');
+        kfPanel.style.display = 'none';
+        window.scrollTo(0,0);
+    }
+
+    // 提交订单，弹出反诈弹窗，【数据仅留在前端，不上传任何地方】
+    submitBtn.onclick = function(){
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const addr = document.getElementById('addr').value.trim();
+        if(!name || !phone || !addr){
+            alert("请把收货信息填完整再提交订单");
+            return;
+        }
+        mask.style.display = 'flex';
+    }
+
+    okBtn.onclick = function(){
+        mask.style.display = 'none';
+        pageOrder.classList.add('hide');
+        pageGoods.classList.remove('hide');
+        buyBar.classList.remove('hide');
+        document.getElementById('name').value = '';
+        document.getElementById('phone').value = '';
+        document.getElementById('addr').value = '';
+    }
+</script>
+</body>
+</html>
